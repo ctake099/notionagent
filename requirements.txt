@@ -1,0 +1,13 @@
+# Webフレームワークとサーバー
+fastapi
+uvicorn[standard]
+
+# .envファイル読み込み
+python-dotenv
+
+# Bedrock Agent関連
+strands-agents
+mcp
+
+# AWS SDK
+boto3
