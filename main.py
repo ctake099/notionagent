@@ -41,8 +41,10 @@ async def ask_agent(request: QuestionRequest):
             lambda: stdio_client(
                 StdioServerParameters(
                     command="npx",
-                    args=["-y", "mcp-remote", "https://mcp.notion.com/mcp"]
+                    args=["-y", "@notionhq/notion-mcp-server"],
+                    env={"NOTION_TOKEN": os.getenv("NOTION_TOKEN")}  # ← .envに入れて読み込む
                 )
+
             )
         )
 
@@ -62,10 +64,7 @@ async def ask_agent(request: QuestionRequest):
             print(final_response)
 
         # 成功した結果を返す
-        # ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-        # 修正点：AgentResultオブジェクトをstr()で文字列に変換する
         return AnswerResponse(question=user_question, answer=str(final_response))
-        # ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
     except Exception as e:
         print(f"エラーが発生しました: {e}")
